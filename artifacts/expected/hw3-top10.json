@@ -1,0 +1,16 @@
+{
+  "source": "Homework 3: artifacts/results/mapreduce_pairs.json",
+  "top10": [
+    {"skills": ["Docker", "Kubernetes"], "count": 1219},
+    {"skills": ["Docker", "Linux"], "count": 1190},
+    {"skills": ["Kubernetes", "Linux"], "count": 1141},
+    {"skills": ["Ansible", "Linux"], "count": 862},
+    {"skills": ["DevOps", "Linux"], "count": 824},
+    {"skills": ["DevOps", "Docker"], "count": 798},
+    {"skills": ["DevOps", "Kubernetes"], "count": 798},
+    {"skills": ["Ansible", "Docker"], "count": 774},
+    {"skills": ["Ansible", "Kubernetes"], "count": 754},
+    {"skills": ["Linux", "Python"], "count": 738}
+  ]
+}
+

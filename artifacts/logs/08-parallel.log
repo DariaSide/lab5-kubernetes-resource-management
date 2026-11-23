@@ -1,0 +1,93 @@
+job.batch/pairs-map created
+job.batch/pairs-map condition met
+[pod/pairs-map-3-9zkn4/mapper] {"part": 3, "parts": 4, "source_rows": 5158, "selected_rows": 1289, "unique_pairs": 8644, "peak_rss_mib": 54.45, "key": "partials/part-00003.json"}
+[pod/pairs-map-0-9l6ff/mapper] {"part": 0, "parts": 4, "source_rows": 5158, "selected_rows": 1290, "unique_pairs": 10078, "peak_rss_mib": 54.96, "key": "partials/part-00000.json"}
+[pod/pairs-map-1-rqvrr/mapper] {"part": 1, "parts": 4, "source_rows": 5158, "selected_rows": 1290, "unique_pairs": 9666, "peak_rss_mib": 54.96, "key": "partials/part-00001.json"}
+[pod/pairs-map-2-26ztv/mapper] {"part": 2, "parts": 4, "source_rows": 5158, "selected_rows": 1289, "unique_pairs": 10344, "peak_rss_mib": 55.2, "key": "partials/part-00002.json"}
+job.batch/pairs-reduce created
+job.batch/pairs-reduce condition met
+{
+  "event": "parallel_reduce_complete",
+  "parts": 4,
+  "rows": 5158,
+  "unique_pairs": 22286,
+  "mapper_peak_rss_mib": [
+    54.96,
+    54.96,
+    55.2,
+    54.45
+  ],
+  "top10": [
+    {
+      "skills": [
+        "Docker",
+        "Kubernetes"
+      ],
+      "count": 1219
+    },
+    {
+      "skills": [
+        "Docker",
+        "Linux"
+      ],
+      "count": 1190
+    },
+    {
+      "skills": [
+        "Kubernetes",
+        "Linux"
+      ],
+      "count": 1141
+    },
+    {
+      "skills": [
+        "Ansible",
+        "Linux"
+      ],
+      "count": 862
+    },
+    {
+      "skills": [
+        "DevOps",
+        "Linux"
+      ],
+      "count": 824
+    },
+    {
+      "skills": [
+        "DevOps",
+        "Docker"
+      ],
+      "count": 798
+    },
+    {
+      "skills": [
+        "DevOps",
+        "Kubernetes"
+      ],
+      "count": 798
+    },
+    {
+      "skills": [
+        "Ansible",
+        "Docker"
+      ],
+      "count": 774
+    },
+    {
+      "skills": [
+        "Ansible",
+        "Kubernetes"
+      ],
+      "count": 754
+    },
+    {
+      "skills": [
+        "Linux",
+        "Python"
+      ],
+      "count": 738
+    }
+  ],
+  "peak_rss_mib": 75.31
+}

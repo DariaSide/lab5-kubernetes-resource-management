@@ -1,0 +1,9 @@
+.git
+.tools
+artifacts
+output
+report
+tmp
+__pycache__
+*.pyc
+

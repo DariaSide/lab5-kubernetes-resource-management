@@ -1,0 +1,160 @@
+priorityclass.scheduling.k8s.io/lab5-low configured
+priorityclass.scheduling.k8s.io/lab5-high configured
+deployment.apps/cpu-fillers created
+
+--- CPU saturation before pending pod ---
+Pending 6
+Running 34
+pod/cpu-pending created
+
+--- Pending because CPU requests do not fit ---
+NAME          READY   STATUS    RESTARTS   AGE   IP       NODE     NOMINATED NODE   READINESS GATES
+cpu-pending   0/1     Pending   0          6s    <none>   <none>   <none>           <none>
+Name:                 cpu-pending
+Namespace:            lab5
+Priority:             -100
+Priority Class Name:  lab5-low
+Service Account:      default
+Node:                 <none>
+Labels:               app=cpu-pending
+Annotations:          <none>
+Status:               Pending
+IP:                   
+IPs:                  <none>
+Containers:
+  burner:
+    Image:      skill-pairs:lab5
+    Port:       <none>
+    Host Port:  <none>
+    Args:
+      burn-cpu
+    Limits:
+      cpu:     2
+      memory:  64Mi
+    Requests:
+      cpu:     2
+      memory:  32Mi
+    Environment:
+      DURATION_SECONDS:  900
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-npxvw (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False 
+Volumes:
+  kube-api-access-npxvw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From               Message
+  ----     ------            ----  ----               -------
+  Warning  FailedScheduling  6s    default-scheduler  0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+pod/cpu-high created
+pod/cpu-high condition met
+
+--- High-priority pod and preemption evidence ---
+NAME       READY   STATUS    RESTARTS   AGE   IP             NODE                 NOMINATED NODE   READINESS GATES
+cpu-high   1/1     Running   0          6s    10.244.0.138   lab5-control-plane   <none>           <none>
+Name:                 cpu-high
+Namespace:            lab5
+Priority:             1000
+Priority Class Name:  lab5-high
+Service Account:      default
+Node:                 lab5-control-plane/172.19.0.2
+Start Time:           Mon, 23 Nov 2026 21:25:27 +0300
+Labels:               app=cpu-high
+Annotations:          <none>
+Status:               Running
+IP:                   10.244.0.138
+IPs:
+  IP:  10.244.0.138
+Containers:
+  burner:
+    Container ID:  containerd://67cf114a44ac4382dafa510e07b4b2601c882dec57b3f3cba627c3ba4d01d77d
+    Image:         skill-pairs:lab5
+    Image ID:      sha256:8d15ec81ffd0c3632660a20dbf17d251ff0873770ecc7bf00a660a24eede4ccc
+    Port:          <none>
+    Host Port:     <none>
+    Args:
+      burn-cpu
+    State:          Running
+      Started:      Mon, 23 Nov 2026 21:25:28 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     2
+      memory:  64Mi
+    Requests:
+      cpu:     2
+      memory:  32Mi
+    Environment:
+      DURATION_SECONDS:  120
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-qbrc4 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-qbrc4:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age              From               Message
+  ----     ------            ----             ----               -------
+  Warning  FailedScheduling  6s (x2 over 6s)  default-scheduler  0/1 nodes are available: 1 Insufficient cpu.
+  Warning  FailedScheduling  6s               default-scheduler  0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: not eligible due to a terminating pod on the nominated node.
+  Normal   Scheduled         6s               default-scheduler  Successfully assigned lab5/cpu-high to lab5-control-plane
+  Normal   Pulled            5s               kubelet            Container image "skill-pairs:lab5" already present on machine
+  Normal   Created           5s               kubelet            Created container: burner
+  Normal   Started           5s               kubelet            Started container burner
+3m45s       Normal    Scheduled              pod/cpu-pending                     Successfully assigned lab5/cpu-pending to lab5-control-plane
+3m45s       Normal    Scheduled              pod/cpu-high                        Successfully assigned lab5/cpu-high to lab5-control-plane
+3m44s       Normal    Pulled                 pod/cpu-pending                     Container image "skill-pairs:lab5" already present on machine
+3m44s       Normal    Pulled                 pod/cpu-high                        Container image "skill-pairs:lab5" already present on machine
+3m44s       Normal    Created                pod/cpu-high                        Created container: burner
+3m44s       Normal    Started                pod/cpu-high                        Started container burner
+3m44s       Normal    Created                pod/cpu-pending                     Created container: burner
+3m44s       Normal    Started                pod/cpu-pending                     Started container burner
+3m29s       Normal    Killing                pod/cpu-high                        Stopping container burner
+3m29s       Normal    Killing                pod/cpu-pending                     Stopping container burner
+27s         Warning   FailedScheduling       pod/cpu-pending                     0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+79s         Warning   FailedScheduling       pod/cpu-high                        0/1 nodes are available: 1 Insufficient cpu.
+79s         Normal    Created                pod/cpu-high                        Created container: burner
+79s         Normal    Pulled                 pod/cpu-high                        Container image "skill-pairs:lab5" already present on machine
+79s         Warning   FailedScheduling       pod/cpu-high                        0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: not eligible due to a terminating pod on the nominated node.
+79s         Normal    Scheduled              pod/cpu-high                        Successfully assigned lab5/cpu-high to lab5-control-plane
+79s         Normal    Started                pod/cpu-high                        Started container burner
+27s         Normal    Killing                pod/cpu-high                        Stopping container burner
+6s          Warning   FailedScheduling       pod/cpu-pending                     0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-5wlm5    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-rnzm9    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-7cwq8    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Warning   FailedScheduling       pod/cpu-high                        0/1 nodes are available: 1 Insufficient cpu.
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-c64dg    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Warning   FailedScheduling       pod/cpu-high                        0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: not eligible due to a terminating pod on the nominated node.
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-rmq29    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Normal    Scheduled              pod/cpu-high                        Successfully assigned lab5/cpu-high to lab5-control-plane
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-7zqrg    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-f9j2d    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+6s          Normal    Preempted              pod/cpu-fillers-666ccccc66-pz5b4    Preempted by pod 7ffc6186-8fc6-480f-94d9-e3b09b4b5887 on node lab5-control-plane
+5s          Normal    Pulled                 pod/cpu-high                        Container image "skill-pairs:lab5" already present on machine
+5s          Normal    Created                pod/cpu-high                        Created container: burner
+5s          Normal    Started                pod/cpu-high                        Started container burner

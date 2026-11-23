@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-fillers
+  namespace: lab5
+spec:
+  replicas: 40
+  selector:
+    matchLabels: {app: cpu-filler}
+  template:
+    metadata:
+      labels: {app: cpu-filler}
+    spec:
+      priorityClassName: lab5-low
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: burner
+          image: skill-pairs:lab5
+          imagePullPolicy: Never
+          args: ["burn-cpu"]
+          env:
+            - {name: DURATION_SECONDS, value: "900"}
+          resources:
+            requests: {cpu: 250m, memory: 24Mi}
+            limits: {cpu: 250m, memory: 64Mi}
+

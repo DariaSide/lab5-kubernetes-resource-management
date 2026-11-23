@@ -1,0 +1,78 @@
+job.batch/pairs-oom created
+job.batch/pairs-oom condition met
+pod=pairs-oom-f26jw
+phase=Failed
+reason=OOMKilled
+exitCode=137
+Name:             pairs-oom-f26jw
+Namespace:        lab5
+Priority:         0
+Service Account:  default
+Node:             lab5-control-plane/172.19.0.2
+Start Time:       Mon, 23 Nov 2026 21:21:35 +0300
+Labels:           batch.kubernetes.io/controller-uid=603e9e0d-89f9-4828-a9e0-78f4e55f84f0
+                  batch.kubernetes.io/job-name=pairs-oom
+                  controller-uid=603e9e0d-89f9-4828-a9e0-78f4e55f84f0
+                  job-name=pairs-oom
+Annotations:      <none>
+Status:           Failed
+IP:               10.244.0.10
+IPs:
+  IP:           10.244.0.10
+Controlled By:  Job/pairs-oom
+Containers:
+  calculator:
+    Container ID:  containerd://446bd041df04c1ad77cf901ba3e021e22948042affa92b29f05b340990ae83e5
+    Image:         skill-pairs:lab5
+    Image ID:      sha256:8d15ec81ffd0c3632660a20dbf17d251ff0873770ecc7bf00a660a24eede4ccc
+    Port:          <none>
+    Host Port:     <none>
+    Args:
+      standalone
+    State:          Terminated
+      Reason:       OOMKilled
+      Exit Code:    137
+      Started:      Mon, 23 Nov 2026 21:21:35 +0300
+      Finished:     Mon, 23 Nov 2026 21:21:36 +0300
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     1
+      memory:  64Mi
+    Requests:
+      cpu:     100m
+      memory:  32Mi
+    Environment:
+      MEMORY_PROBE_MIB:  96
+      S3_ENDPOINT:       <set to the key 'endpoint' of config map 's3-config'>     Optional: false
+      S3_BUCKET:         <set to the key 'bucket' of config map 's3-config'>       Optional: false
+      S3_OBJECT_KEY:     <set to the key 'object-key' of config map 's3-config'>   Optional: false
+      S3_ACCESS_KEY:     <set to the key 'access-key' in secret 's3-credentials'>  Optional: false
+      S3_SECRET_KEY:     <set to the key 'secret-key' in secret 's3-credentials'>  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cqgq9 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-cqgq9:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  3s    default-scheduler  Successfully assigned lab5/pairs-oom-f26jw to lab5-control-plane
+  Normal  Pulled     3s    kubelet            Container image "skill-pairs:lab5" already present on machine
+  Normal  Created    3s    kubelet            Created container: calculator
+  Normal  Started    3s    kubelet            Started container calculator

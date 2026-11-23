@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pairs-oom
+  namespace: lab5
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: calculator
+          image: skill-pairs:lab5
+          imagePullPolicy: Never
+          args: ["standalone"]
+          env:
+            - {name: MEMORY_PROBE_MIB, value: "96"}
+            - {name: S3_ENDPOINT, valueFrom: {configMapKeyRef: {name: s3-config, key: endpoint}}}
+            - {name: S3_BUCKET, valueFrom: {configMapKeyRef: {name: s3-config, key: bucket}}}
+            - {name: S3_OBJECT_KEY, valueFrom: {configMapKeyRef: {name: s3-config, key: object-key}}}
+            - {name: S3_ACCESS_KEY, valueFrom: {secretKeyRef: {name: s3-credentials, key: access-key}}}
+            - {name: S3_SECRET_KEY, valueFrom: {secretKeyRef: {name: s3-credentials, key: secret-key}}}
+          resources:
+            requests: {cpu: 100m, memory: 32Mi}
+            limits: {cpu: "1", memory: 64Mi}
+

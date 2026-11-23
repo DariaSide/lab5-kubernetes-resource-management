@@ -1,0 +1,13 @@
+namespace/lab5-quota created
+resourcequota/compute-quota created
+pod/quota-first created
+Error from server (Forbidden): error when creating "STDIN": pods "quota-rejected" is forbidden: exceeded quota: compute-quota, requested: requests.cpu=200m, used: requests.cpu=400m, limited: requests.cpu=500m
+Name:            compute-quota
+Namespace:       lab5-quota
+Resource         Used   Hard
+--------         ----   ----
+limits.cpu       500m   1
+limits.memory    128Mi  512Mi
+pods             1      2
+requests.cpu     400m   500m
+requests.memory  64Mi   256Mi

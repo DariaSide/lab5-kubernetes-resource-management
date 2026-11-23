@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: upload-dataset
+  namespace: lab5
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: uploader
+          image: skill-pairs:lab5
+          imagePullPolicy: Never
+          args: ["upload"]
+          envFrom:
+            - configMapRef: {name: s3-config}
+          env:
+            - {name: S3_ENDPOINT, valueFrom: {configMapKeyRef: {name: s3-config, key: endpoint}}}
+            - {name: S3_BUCKET, valueFrom: {configMapKeyRef: {name: s3-config, key: bucket}}}
+            - {name: S3_OBJECT_KEY, valueFrom: {configMapKeyRef: {name: s3-config, key: object-key}}}
+            - {name: S3_ACCESS_KEY, valueFrom: {secretKeyRef: {name: s3-credentials, key: access-key}}}
+            - {name: S3_SECRET_KEY, valueFrom: {secretKeyRef: {name: s3-credentials, key: secret-key}}}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 500m, memory: 192Mi}
+
